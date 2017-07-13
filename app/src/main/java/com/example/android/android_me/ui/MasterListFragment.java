@@ -16,11 +16,13 @@
 
 package com.example.android.android_me.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.example.android.android_me.R;
@@ -37,6 +39,24 @@ public class MasterListFragment extends Fragment {
 
     // TODO (2) Override onAttach to make sure that the container activity has implemented the callback
 
+    OnImageClickListener mCallback;
+
+    public interface OnImageClickListener {
+        void onImageSelected(int position);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (OnImageClickListener) context;
+        }
+        catch (ClassCastException e){
+            throw new ClassCastException(context.toString()
+            + " must implement OnImageClickListener");
+        }
+    }
 
     // Mandatory empty constructor
     public MasterListFragment() {
@@ -61,6 +81,12 @@ public class MasterListFragment extends Fragment {
 
         // TODO (3) Set a click listener on the gridView and trigger the callback onImageSelected when an item is clicked
 
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mCallback.onImageSelected(position);
+            }
+        });
         // Return the root view
         return rootView;
     }
