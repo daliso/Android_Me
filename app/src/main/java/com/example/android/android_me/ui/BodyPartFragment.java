@@ -33,6 +33,6 @@ public class BodyPartFragment extends Fragment {
         imageView.setImageResource(AndroidImageAssets.getHeads().get(0));
 
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return rootView;
     }
 }
